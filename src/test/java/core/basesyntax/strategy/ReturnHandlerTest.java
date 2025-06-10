@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import core.basesyntax.db.Storage;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +16,13 @@ class ReturnHandlerTest {
 
     @BeforeEach
     void setUp() {
-        Storage.inventory.clear();
         returnHandler = new ReturnHandler();
         Storage.inventory.put("banana", 10);
+    }
+
+    @AfterEach
+    void tearDown() {
+        Storage.inventory.clear();
     }
 
     @Test

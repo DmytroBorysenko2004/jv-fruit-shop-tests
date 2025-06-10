@@ -18,9 +18,16 @@ class DataConverterTest {
         List<FruitTransaction> result = dataConverter.convertDataToTransactions(input);
 
         assertEquals(2, result.size());
-        assertEquals("b", result.get(0).getOperation());
-        assertEquals("apple", result.get(0).getFruit());
-        assertEquals(100, result.get(0).getQuantity());
+
+        FruitTransaction first = result.get(0);
+        assertEquals("b", first.getOperation());
+        assertEquals("apple", first.getFruit());
+        assertEquals(100, first.getQuantity());
+
+        FruitTransaction second = result.get(1);
+        assertEquals("s", second.getOperation());
+        assertEquals("banana", second.getFruit());
+        assertEquals(50, second.getQuantity());
     }
 
     @Test

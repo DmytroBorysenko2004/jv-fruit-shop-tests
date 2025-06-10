@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import core.basesyntax.db.Storage;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +16,12 @@ class SupplyHandlerTest {
 
     @BeforeEach
     void setUp() {
-        Storage.inventory.clear();
         supplyHandler = new SupplyHandler();
+    }
+
+    @AfterEach
+    void tearDown() {
+        Storage.inventory.clear();
     }
 
     @Test

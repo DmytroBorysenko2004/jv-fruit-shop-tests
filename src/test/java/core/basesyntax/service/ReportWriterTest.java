@@ -16,12 +16,17 @@ class ReportWriterTest {
 
     @BeforeEach
     void setup() throws IOException {
-        testOutput = Files.createTempFile("testOutputReport", ".txt");
+        if (testOutput == null) {
+            testOutput = Files.createTempFile("testOutputReport", ".txt");
+        }
     }
 
     @AfterEach
     void cleanup() throws IOException {
-        Files.deleteIfExists(testOutput);
+        if (testOutput != null) {
+            Files.deleteIfExists(testOutput);
+            testOutput = null;
+        }
     }
 
     @Test
@@ -37,8 +42,7 @@ class ReportWriterTest {
 
     @Test
     void writeReport_throwsRuntimeException_whenCannotWrite() {
-        ReportWriter writer;
-        writer = new ReportWriter();
+        ReportWriter writer = new ReportWriter();
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             writer.writeReport("content", "/invalid/path/output.txt");

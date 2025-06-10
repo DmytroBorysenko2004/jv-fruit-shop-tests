@@ -14,6 +14,7 @@ import core.basesyntax.strategy.SupplyHandler;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +25,6 @@ class FruitShopServiceTest {
 
     @BeforeEach
     void setUp() {
-        Storage.inventory.clear();
         handlers = new HashMap<>();
         handlers.put(FruitTransaction.OperationType.BALANCE, new BalanceHandler());
         handlers.put(FruitTransaction.OperationType.SUPPLY, new SupplyHandler());
@@ -32,6 +32,11 @@ class FruitShopServiceTest {
         handlers.put(FruitTransaction.OperationType.RETURN, new ReturnHandler());
 
         service = new FruitShopService(handlers);
+    }
+
+    @AfterEach
+    void tearDown() {
+        Storage.inventory.clear();
     }
 
     @Test
@@ -49,29 +54,21 @@ class FruitShopServiceTest {
 
     @Test
     void processFile_throwsException_whenOperationStrategyIsNull() {
-        FruitTransaction tx = new FruitTransaction("b", "apple", 10);
-        handlers.remove(FruitTransaction.OperationType.BALANCE);
-
+        FruitTransaction tx = new FruitTransaction("x", "apple", 10);
         List<FruitTransaction> transactions = List.of(tx);
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
                 service.processFile(transactions));
-        assertTrue(exception.getMessage().contains("Invalid or unknown operation"));
+
+        assertTrue(exception.getMessage().contains("Invalid operation code"));
     }
 
-    @Test
-    void dataConverter_convertDataToTransactions_emptyList() {
-        List<String> input = List.of();
-        List<FruitTransaction> result = DataConverter.convertDataToTransactions(input);
-        assertTrue(result.isEmpty());
-    }
-
-    @Test
+    @Test // проверяем содержит ли все наши поля toString
     void fruitTransaction_toString_containsFields() {
         FruitTransaction transaction = new FruitTransaction("b", "apple", 10);
         String str = transaction.toString();
-        assertTrue(str.contains("b"));
-        assertTrue(str.contains("apple"));
-        assertTrue(str.contains("10"));
+        assertTrue(str.contains("operation='b'"));
+        assertTrue(str.contains("fruit='apple'"));
+        assertTrue(str.contains("quantity=10"));
     }
 }

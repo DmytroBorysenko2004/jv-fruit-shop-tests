@@ -8,15 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import core.basesyntax.db.Storage;
 import core.basesyntax.strategy.BalanceHandler;
 import core.basesyntax.strategy.OperationStrategy;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 class BalanceHandlerTest {
 
     private final OperationStrategy balanceHandler = new BalanceHandler();
 
-    @BeforeEach
-    void setUp() {
+    @AfterEach
+    void tearDown() {
         Storage.inventory.clear();
     }
 

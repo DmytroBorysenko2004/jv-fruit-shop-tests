@@ -11,7 +11,7 @@ public class DataConverter {
     private static final int FRUIT_INDEX = 1;
     private static final int QUANTITY_INDEX = 2;
 
-    public static List<FruitTransaction> convertDataToTransactions(List<String> data) {
+    public List<FruitTransaction> convertDataToTransactions(List<String> data) {
         List<FruitTransaction> transactions = new ArrayList<>();
 
         for (String line : data) {
