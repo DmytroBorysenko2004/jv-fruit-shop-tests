@@ -1,7 +1,6 @@
 package core.basesyntax.service;
 
 import core.basesyntax.db.Storage;
-import java.util.Map;
 
 public class ReportContentGenerator {
 
@@ -12,12 +11,13 @@ public class ReportContentGenerator {
         StringBuilder reportContent = new StringBuilder();
         reportContent.append(HEADER);
 
-        for (Map.Entry<String, Integer> entry : Storage.inventory.entrySet()) {
-            reportContent.append(entry.getKey())
-                    .append(SEPARATOR)
-                    .append(entry.getValue())
-                    .append(System.lineSeparator());
-        }
+        Storage.inventory.keySet().stream()
+                .sorted()
+                .forEach(fruit -> reportContent.append(fruit)
+                        .append(SEPARATOR)
+                        .append(Storage.inventory.get(fruit))
+                        .append(System.lineSeparator()));
+
         return reportContent.toString();
     }
 }

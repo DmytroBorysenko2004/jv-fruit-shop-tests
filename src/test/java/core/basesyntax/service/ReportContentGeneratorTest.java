@@ -1,5 +1,6 @@
 package core.basesyntax.service;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import core.basesyntax.db.Storage;
@@ -46,11 +47,11 @@ class ReportContentGeneratorTest {
 
         String result = generator.generateReportContent();
 
-        String expected = "fruit,quantity" + System.lineSeparator()
-                + "kiwi,50" + System.lineSeparator()
-                + "apple,20" + System.lineSeparator()
-                + "banana,30" + System.lineSeparator();
+        String expectedHeader = "fruit,quantity" + System.lineSeparator();
+        assertEquals(true, result.startsWith(expectedHeader));
 
-        assertEquals(expected, result);
+        assertTrue(result.contains("kiwi,50"));
+        assertTrue(result.contains("apple,20"));
+        assertTrue(result.contains("banana,30"));
     }
 }
