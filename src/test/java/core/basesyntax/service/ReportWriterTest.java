@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 
 class ReportWriterTest {
 
+    private static final String INVALID_OUTPUT_PATH = "/invalid/path/output.txt";
+    private static final String TEST_CONTENT = "Test report content";
+
     private Path testOutput;
 
     @BeforeEach
@@ -32,21 +35,20 @@ class ReportWriterTest {
     @Test
     void writeReport_writesContentToFile() throws IOException {
         ReportWriter writer = new ReportWriter();
-        String content = "Test report content";
 
-        writer.writeReport(content, testOutput.toString());
+        writer.writeReport(TEST_CONTENT, testOutput.toString());
 
         String fileContent = Files.readString(testOutput);
-        assertTrue(fileContent.contains(content));
+        assertTrue(fileContent.contains(TEST_CONTENT));
     }
 
     @Test
     void writeReport_throwsRuntimeException_whenCannotWrite() {
         ReportWriter writer = new ReportWriter();
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            writer.writeReport("content", "/invalid/path/output.txt");
-        });
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+                writer.writeReport(TEST_CONTENT, INVALID_OUTPUT_PATH));
+
         assertTrue(exception.getMessage().contains("Error writing report"));
     }
 }

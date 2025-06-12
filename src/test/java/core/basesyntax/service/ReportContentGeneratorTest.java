@@ -46,11 +46,11 @@ class ReportContentGeneratorTest {
 
         String result = generator.generateReportContent();
 
-        String expectedHeader = "fruit,quantity" + System.lineSeparator();
-        assertEquals(true, result.startsWith(expectedHeader));
+        String expected = "fruit,quantity" + System.lineSeparator()
+                + "kiwi,50" + System.lineSeparator()
+                + "apple,20" + System.lineSeparator()
+                + "banana,30" + System.lineSeparator();
 
-        assertEquals(true, result.contains("kiwi,50"));
-        assertEquals(true, result.contains("apple,20"));
-        assertEquals(true, result.contains("banana,30"));
+        assertEquals(expected, result);
     }
 }

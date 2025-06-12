@@ -1,10 +1,9 @@
-package core.basesyntax;
+package core.basesyntax.service;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import core.basesyntax.model.FruitTransaction;
-import core.basesyntax.service.DataConverter;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -17,17 +16,12 @@ class DataConverterTest {
         List<String> input = List.of("b,apple,100", "s,banana,50");
         List<FruitTransaction> result = dataConverter.convertDataToTransactions(input);
 
-        assertEquals(2, result.size());
+        List<FruitTransaction> expected = List.of(
+                new FruitTransaction("b", "apple", 100),
+                new FruitTransaction("s", "banana", 50)
+        );
 
-        FruitTransaction first = result.get(0);
-        assertEquals("b", first.getOperation());
-        assertEquals("apple", first.getFruit());
-        assertEquals(100, first.getQuantity());
-
-        FruitTransaction second = result.get(1);
-        assertEquals("s", second.getOperation());
-        assertEquals("banana", second.getFruit());
-        assertEquals(50, second.getQuantity());
+        assertEquals(expected, result);
     }
 
     @Test

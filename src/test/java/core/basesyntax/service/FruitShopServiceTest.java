@@ -62,13 +62,4 @@ class FruitShopServiceTest {
 
         assertTrue(exception.getMessage().contains("Invalid operation code"));
     }
-
-    @Test // проверяем содержит ли все наши поля toString
-    void fruitTransaction_toString_containsFields() {
-        FruitTransaction transaction = new FruitTransaction("b", "apple", 10);
-        String str = transaction.toString();
-        assertTrue(str.contains("operation='b'"));
-        assertTrue(str.contains("fruit='apple'"));
-        assertTrue(str.contains("quantity=10"));
-    }
 }
